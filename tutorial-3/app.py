@@ -56,20 +56,29 @@ def hottest():
 #print(to_status(readings))
 
 
-def by_room(devices):
+# def by_room(devices):
 
-    grouped_rooms = {}
+#     grouped_rooms = {}
 
-    for device in devices:
+#     for device in devices:
 
-        room = device["room"]
-        name = device["name"]
+#         room = device["room"]
+#         name = device["name"]
 
-        if room not in grouped_rooms:
-            grouped_rooms[room] = []
+#         if room not in grouped_rooms:
+#             grouped_rooms[room] = []
 
-        grouped_rooms[room].append(name)
+#         grouped_rooms[room].append(name)
 
-    return grouped_rooms
+#     return grouped_rooms
 
-print(by_room(readings))
+# print(by_room(readings))
+
+@app.get("/devices/online") 
+def get_online_devices():
+    online_devices = []
+    for device in readings:
+        if device["online"] == True:
+            online_devices.append(device)
+    return online_devices
+
