@@ -29,14 +29,15 @@ def get_devices():
 
 #print(f"Average temperature: {average_temp(readings):.1f}C")
 
-#def hottest(devices):
-   # hottest_device = None
-   # for device in devices:        
-      #      if hottest_device is None or device["temp"] > hottest_device["temp"]:
-        #        hottest_device = device
-   # return hottest_device
+@app.get("/devices/hottest")
+def hottest():
+    hottest_device = None
+    for device in readings:
+        if hottest_device is None or device["temp"] > hottest_device["temp"]:
+            hottest_device = device
+    return hottest_device
 
-#print(f"Hottest device: {hottest(readings)['name']} ({hottest(readings)['temp']} C)") 
+
 
 #def to_status(devices):
 
