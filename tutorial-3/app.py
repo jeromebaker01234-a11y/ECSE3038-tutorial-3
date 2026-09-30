@@ -15,17 +15,11 @@ def get_devices():
     return readings
 
 
-#def average_temp(devices):
- #   total_temp = 0
- #   count = 0
-  #  for device in devices:
-    #    if device["online"]:
-        #    total_temp += device["temp"]
-         #   count += 1
-   # if count > 0:
-    #    return total_temp / count
-   # else:
-     #   return None
+def average_temp(devices):
+    online_temps = [device["temp"] for device in devices if device["online"]]
+    if not online_temps:
+        return None
+    return sum(online_temps) / len(online_temps)
 
 #print(f"Average temperature: {average_temp(readings):.1f}C")
 
@@ -82,12 +76,17 @@ def get_online_devices():
             online_devices.append(device)
     return online_devices
 
-app.get("/devices/{name}") 
+@app.get("/devices/{name}") 
 def get_device(name: str):
     for device in readings:
-        if device["name"] != name:
-            raise HTTPException(status_code=404, detail="Device not found")
         if device["name"] == name:
             return device
+    raise HTTPException(status_code=404, detail="Device not found")
+
+@app.get("/stats")
+def get_stats():
+    avg_temp = average_temp(readings)
+    return {"average_temp": avg_temp}
     
 
+    
