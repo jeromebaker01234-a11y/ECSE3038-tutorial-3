@@ -10,11 +10,10 @@ readings = [
     {"name": "patio",      "room": "outside", "temp": 29.8, "online": True},
 ]
 
-#def list_devices(devices):
- #   for device in devices:        
-   #     print(f"{device['name']}, {device['temp']}C\n")
+@app.get("/devices")
+def get_devices():
+    return readings
 
-#list_devices(readings)
 
 #def average_temp(devices):
  #   total_temp = 0
