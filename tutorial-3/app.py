@@ -91,6 +91,10 @@ def get_device(name: str):
 def get_stats():
     avg_temp = average_temp(readings)
     return {"average_temp": avg_temp}
-    
 
-    
+@app.get("/rooms/{room}/devices")
+def get_devices_by_room(room: str):
+    if room not in [device["room"] for device in readings]:
+        raise HTTPException(status_code=404, detail=f"No room called {room}")
+    devices_in_room = [device for device in readings if device["room"] == room]
+    return devices_in_room
