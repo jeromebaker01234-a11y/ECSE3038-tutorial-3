@@ -14,6 +14,10 @@ readings = [
 def get_devices():
     return readings
 
+@app.post("/devices")
+def create_device(device: dict):
+    readings.append(device)
+    return device
 
 def average_temp(devices):
     online_temps = [device["temp"] for device in devices if device["online"]]
